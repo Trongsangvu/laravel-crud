@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\UserController;
 
 Route::get('/', fn() => redirect()->route('users.index'));
 
-Route::resource('users', Controller::class);
+Route::resource('users', UserController::class);
