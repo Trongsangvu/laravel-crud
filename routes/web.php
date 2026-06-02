@@ -5,4 +5,6 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', fn() => redirect()->route('users.index'));
 
-Route::resource('users', UserController::class);
+Route::middleware(['api.log'])->group(function () {
+    Route::resource('users', UserController::class);
+});
