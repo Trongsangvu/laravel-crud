@@ -9,12 +9,22 @@
                 Users
                 <span>Manage all registered accounts</span>
             </div>
-            <a href="{{ route('users.create') }}" class="btn btn-primary">
-                <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                    <path d="M6.5 1v11M1 6.5h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-                </svg>
-                New User
-            </a>
+
+            <div style="display:flex; gap:10px;">
+                <a href="{{ route('users.create') }}" class="btn btn-primary">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                        <path d="M6.5 1v11M1 6.5h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                    New User
+                </a>
+
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-danger-outline">
+                        Logout
+                    </button>
+                </form>
+            </div>
         </div>
 
         @if (session('success'))
