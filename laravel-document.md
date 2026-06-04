@@ -47,7 +47,9 @@ php artisan make:<type> <NameOfThing>
 | `make:trait`               | `php artisan make:trait HasUuid`                      |
 | `make:view`                | `php artisan make:view users.index`                   |
 
-```bash example crud
+```bash 
+Example crud:
+
 php artisan make:model User -m
 php artisan make:controller UserController --resource
 php artisan make:request StoreUserRequest
