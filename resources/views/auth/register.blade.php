@@ -4,7 +4,6 @@
 
 @section('content')
     <div class="layout">
-        <!-- ── Right Panel ── -->
         <div class="panel-right">
             <div class="form-shell form-shell--wide">
 
@@ -32,7 +31,6 @@
 
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
-
                     <div class="field">
                         <label for="name">Full Name</label>
                         <div class="input-wrap">
@@ -123,11 +121,9 @@
                     </div>
 
                     <button type="submit" class="btn-submit">Create Account</button>
-
                 </form>
             </div>
         </div>
-
     </div>
 
 @section('scripts')

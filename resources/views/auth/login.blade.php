@@ -4,13 +4,12 @@
 
 @section('content')
     <div class="layout">
-        <!-- ── Right Panel ── -->
         <div class="panel-right">
             <div class="form-shell">
 
                 <div class="form-heading">
                     <h1>Welcome back</h1>
-                    <p>Don't have an account? <a href="{{ route('register') }}">Create one</a></p>
+                    {{-- <p>Don't have an account? <a href="{{ route('register') }}">Sign up</a></p> --}}
                 </div>
 
                 @if ($errors->any())
@@ -32,7 +31,6 @@
 
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
-
                     <div class="field">
                         <div class="field-row">
                             <label for="email">Email</label>
@@ -84,10 +82,8 @@
                     </div>
 
                     <button type="submit" class="btn-submit">Sign In</button>
-
                 </form>
             </div>
         </div>
-
     </div>
 @endsection

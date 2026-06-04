@@ -26,6 +26,7 @@ class UserController extends Controller
         $data = $request->validated();
 
         $data['password'] = Hash::make($data['password']);
+        $data['role'] = 'user';
 
         User::create($data);
 

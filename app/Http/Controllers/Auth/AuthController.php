@@ -5,11 +5,17 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function __construct(
+        private readonly AuthService $authService
+    ) {
+    }
+
     public function showLogin()
     {
         return view('auth.login');
@@ -24,38 +30,37 @@ class AuthController extends Controller
     {
         $credentials = $request->validated();
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->route('users.index');
+        if (!$this->authService->login($credentials)) {
+            return back()
+                ->withErrors([
+                    'email' => 'Invalid email or password.',
+                ])
+                ->onlyInput('email');
         }
 
-        return back()
-            ->withErrors([
-                'email' => 'Invalid email or password.',
-            ])
-            ->onlyInput('email');
+        $request->session()->regenerate();
+
+        return auth()->user()->isAdmin()
+            ? redirect()->route('users.index')
+            : redirect()->route('dashboard');
     }
 
     public function register(RegisterRequest $request)
     {
         $data = $request->validated();
 
-        $user = \App\Models\User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $user = $this->authService->register($data);
 
         Auth::login($user);
 
         $request->session()->regenerate();
 
-        return redirect()->route('users.index');
+        return redirect()->route('dashboard');
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        $this->authService->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
