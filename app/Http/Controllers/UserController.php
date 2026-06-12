@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::latest()->paginate(10);
+        $users = User::where('role', 'user')->latest()->paginate(10);
 
         return view('users.index', compact('users'));
     }
@@ -37,6 +37,8 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        $this->authorize('view', $user);
+
         return view('users.show', compact('user'));
     }
 
@@ -64,6 +66,8 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        $this->authorize('delete', $user);
+
         $user->delete();
 
         return redirect()
